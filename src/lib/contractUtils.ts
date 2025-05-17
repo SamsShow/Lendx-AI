@@ -1,7 +1,8 @@
 // This is a placeholder for smart contract interactions
 // In a real implementation, this would interact with the Sui blockchain
 
-import { JsonRpcProvider, TransactionBlock } from "@mysten/sui.js";
+import { SuiClient } from "@mysten/sui.js/client";
+import { TransactionBlock } from "@mysten/sui.js/transactions";
 import { getSuiProvider } from "./walletUtils";
 
 // Mock wallet functions

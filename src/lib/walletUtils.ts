@@ -1,5 +1,5 @@
 // This file contains utility functions for Sui wallet integration
-import { JsonRpcProvider } from "@mysten/sui.js";
+import { SuiClient } from "@mysten/sui.js/client";
 
 // Define network endpoints
 export const SUI_NETWORKS = {
@@ -16,14 +16,14 @@ export const DEFAULT_NETWORK =
 // Create a provider for RPC calls
 export const getSuiProvider = (
   network: string = DEFAULT_NETWORK
-): JsonRpcProvider => {
-  return new JsonRpcProvider(network);
+): SuiClient => {
+  return new SuiClient({ url: network });
 };
 
 // Get account details
 export const getAccountDetails = async (
   address: string,
-  provider: JsonRpcProvider
+  provider: SuiClient
 ) => {
   try {
     const accountInfo = await provider.getObject({
@@ -48,6 +48,11 @@ export const formatSuiBalance = (balance: number | string): string => {
 // Detect wallet type
 export const detectWalletProvider = (): string | null => {
   if (typeof window !== "undefined") {
+    console.log("Checking for wallet providers...");
+    console.log("window.suiWallet:", !!window.suiWallet);
+    console.log("window.suiet:", !!window.suiet);
+    console.log("window.martian:", !!window.martian);
+    
     if (window.suiWallet) return "Sui Wallet";
     if (window.suiet) return "Suiet";
     if (window.martian) return "Martian";
